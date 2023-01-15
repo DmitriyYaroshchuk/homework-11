@@ -35,7 +35,7 @@ class House {
         this.maxQuantityOfFlats = maxQuantityOfFlats;
     }
     addFlat (flatInfo) {
-        if (this.maxQuantityOfFlats > 4) {
+        if (this.maxQuantityOfFlats > 2) {
             this.#arrayOfFlats.push(flatInfo);
         }
         else {
@@ -54,38 +54,86 @@ houseInfo1.addFlat(flatInfo2);
 console.log(houseInfo1);
 
 
+
+
+
+
+
+
+
 //________Task-2_______//
 class Hamburger {
-    constructor() {}
-    static SIZE_SMALL (price,calories) {};
-    static SIZE_HUGE (price,calories) {};
-    static STUFFING_CHEESE (price,calories) {};
-    static STUFFING_SALAD (price,calories) {};
-    static STUFFING_POTATOE (price,calories) {};
-    static TOPPING_SAUCE (price,calories) {};
-    static TOPPING_MAYO (price,calories) {};
-    addTopping (TOPPING_MAYO) {};
-    calculate () {
-
+    constructor(size,stuffing) {
+        this.size = size;
+        this.stuffing = stuffing;
+        this.toppings = [];
+    }
+    static get SIZE_SMALL () {
+        return {
+            name: 'SIZE_SMALL',
+            price: 50,
+            calories: 20
+        }
+    };
+    static get SIZE_HUGE () {
+        return {
+            name: 'SIZE_HUGE',
+            price: 100,
+            calories: 40
+        }
+    };
+    static get STUFFING_CHEESE () {
+        return {
+            name: 'STUFFING_CHEESE',
+            price: 10,
+            calories: 20
+        }
+    };
+    static get STUFFING_SALAD () {
+        return {
+            name: 'STUFFING_SALAD',
+            price: 20,
+            calories: 5
+        }
+    };
+    static get STUFFING_POTATOE () {
+        return {
+            name: 'STUFFING_POTATOE',
+            price: 15,
+            calories: 10
+        }
+    };
+    static get TOPPING_SAUCE () {
+        return {
+            name: 'TOPPING_SAUCE',
+            price: 15,
+            calories: 0
+        }
+    };
+    static get TOPPING_MAYO () {
+        return {
+            name: 'TOPPING_MAYO',
+            price: 20,
+            calories: 5
+        }
+    };
+    addTopping (topping) {
+        this.toppings.push(topping);
+        return this;
+    }
+    calculateCalories () {
+        const toppingCalories = this.toppings.reduce(function (prev,topping) {
+            return prev + topping.calories;
+        },0);
+        return this.size.calories + this.stuffing.calories + toppingCalories;
     }
     calculatePrice () {
-
+        const toppingPrice = this.toppings.reduce(function (prev, topping) {
+            return prev + topping.price
+        },0);
+        return this.size.price + this.stuffing.price + toppingPrice;
     }
-
 }
-//_______Размеры гамбургеров_______//
-Hamburger.SIZE_SMALL(50,20);
-Hamburger.SIZE_HUGE(100,40);
-
-//_______Начинки гамбургеров_______//
-Hamburger.STUFFING_CHEESE(10,20);
-Hamburger.STUFFING_SALAD(20,5);
-Hamburger.STUFFING_POTATOE(15,10);
-
-//_______Добавки к гамбургерам_______//
-Hamburger.TOPPING_SAUCE(15,0);
-Hamburger.TOPPING_MAYO(20,5);
-
 // маленький гамбургер з начинкою з сыру //
 let hamburger = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_CHEESE);
 
@@ -93,7 +141,7 @@ let hamburger = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_CHEESE);
 hamburger.addTopping(Hamburger.TOPPING_MAYO);
 
 // спрашиваем сколько калорий
-console.log('Calories: ' + hamburger.calculate ());
+console.log('Calories: ' + hamburger.calculateCalories ());
 
 // тут я передумал и решил добавить еще приправу
 hamburger.addTopping(Hamburger .TOPPING_SAUCE);
